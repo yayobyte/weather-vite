@@ -20,7 +20,7 @@ export abstract class WeatherService {
             return data
         } catch (error) {
             console.log('There was an error fetching weather')
-            return Error(error instanceof Error ? error.message : 'Unknown error occured when fetching weather data')
+            throw new Error(error instanceof Error ? error.message : 'Unknown error occured when fetching weather data')
         }
     }
 }

@@ -43,4 +43,4 @@ type Current = {
 export type WeatherResponse = {
     location: WeatherLocation
     current: Current
-} | Error
+}
