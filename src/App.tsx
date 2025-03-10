@@ -1,16 +1,22 @@
 import { useState } from 'react'
 import './App.css'
 import { useWeather } from './hooks/useWeather'
+import SearchBar from './components/SearchBar/SearchBar'
 
 function App() {
-  const [location] = useState('Medellin')
+  const [location, setLocation] = useState('Medellin')
   const { data, isLoading, isError, error } = useWeather(location)
+
+  const onSearch = (city: string) => {
+    setLocation(city)
+  }
 
   return (
     <>
       <div>
         <h1>Weather Service</h1>
         <div>Current Location: <span>{location}</span></div>
+        <SearchBar onSearch={onSearch} />
         {isLoading && <div>Loading weather data...</div>}
         {isError && <div>Error: {error?.message}</div>}
         {data && (
