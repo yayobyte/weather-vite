@@ -47,10 +47,10 @@ export const theme = createTheme({
 				h1: {
 					fontFamily: "'Roboto Flex', sans-serif",
 					fontWeight: 100,
-					fontSize: '6.8rem',
+					fontSize: '6rem',
 				},
 				body2: {
-					color: 'rgba(255, 255, 255, 0.7)',
+					color: 'rgba(255, 255, 255, 0.8)',
 				},
 			},
 		},

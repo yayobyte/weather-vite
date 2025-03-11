@@ -11,7 +11,7 @@ type WeatherCardProps = {
     data: WeatherResponse
 }
 
-const ICON_SIZE = 40
+const ICON_SIZE = 30
 
 const WeatherCard = ({ data }: WeatherCardProps) => {
   return (
@@ -34,10 +34,26 @@ const WeatherCard = ({ data }: WeatherCardProps) => {
       </Box>
 
       <Box
-        sx={{ display: 'flex', width: '100%' }}
+        sx={{ display: 'flex', width: '100%', flexDirection: "row" }}
       >
-        <Box sx={{ mb: 8, flex: 4, justifyContent: 'space-between', flexDirection: 'column', mr: 2 }}>
-          <Typography variant="h1" sx={{ fontWeight: 300, ml: 5 }}>
+        <Box
+          sx={{
+            mb: 8,
+            flex: { xs: 3, sm: 4 },
+            justifyContent: 'space-between',
+            flexDirection: 'column',
+            mr: { sm: 2 }
+          }}
+        >
+          <Typography
+            variant="h1"
+            sx={{
+              fontWeight: 300,
+              ml: { xs: 0, sm: 4 },
+              mb: { xs: 2, sm: 0},
+              fontSize: { xs: "4.7rem", sm: "6rem" },
+            }}
+          >
             {data.current.temp_c}°
           </Typography>
           
@@ -50,10 +66,10 @@ const WeatherCard = ({ data }: WeatherCardProps) => {
             </Box>
           </Box>
 
-          <Typography variant="h5">{data.current.condition.text}</Typography>
+          <Typography variant="h5" sx={{ fontSize: { xs: "1rem", sm: "1.3rem" }}}>{data.current.condition.text}</Typography>
         </Box>
 
-        <Divider orientation='vertical' sx={{ height: 220, bgcolor: "white", width: 2 }} />
+        <Divider orientation='vertical' sx={{ height: { xs: 190, sm: 200 }, bgcolor: "white", width: 2 }} />
 
         <Box
           sx={{
