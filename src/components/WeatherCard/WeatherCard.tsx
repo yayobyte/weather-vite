@@ -1,10 +1,9 @@
 import { 
-    Paper, 
     Typography, 
-    Box, 
-    Grid2,
+    Box,
 } from '@mui/material'
 import { WeatherResponse } from '../../api/weather/weatherService.d'
+import { formatDate } from '../../helpers/date'
 
 type WeatherCardProps = {
     data: WeatherResponse
@@ -12,68 +11,49 @@ type WeatherCardProps = {
 
 const WeatherCard = ({ data }: WeatherCardProps) => {
   return (
-    <Paper elevation={3}>
-      <Box sx={{ textAlign: 'center', my: 2 }}>
-        <Typography variant="h4" sx={{ fontWeight: 600 }}>
-          {data.location.name}
-        </Typography>
-        <Typography variant='body1' gutterBottom>
-          {data.location.country}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center",
+        textAlign: "center",
+      }}
+    >
+      <Box sx={{ my: 4 }}>
+        <Typography variant="h3" sx={{ fontWeight: 400, fontFamily: "'Raleway', sans-serif" }}>
+          {data.location.name.toUpperCase()}
         </Typography>
         <Typography variant="body2">
-          {data.location.localtime.split(' ')[0]}
-        </Typography>
-        <Typography variant="body2">
-          {data.location.localtime.split(' ')[1]}
+          {formatDate(new Date(data.location.localtime.split(" ")[0]))}
         </Typography>
       </Box>
-      
-      <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', flexDirection: 'row' }}>
+
+      <Box sx={{ mb: 8 }}>
         <Typography variant="h1" sx={{ fontWeight: 100 }}>
           {data.current.temp_c}°
         </Typography>
+        <Typography variant="h5">{data.current.condition.text}</Typography>
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 6, mt: 2 }}>
+          <Typography variant="body1">⬆️ {data.current.heatindex_c}°C</Typography>
+          <Typography variant="body1">⬇️ {data.current.windchill_c}°C</Typography>
+        </Box>
       </Box>
-      
-      <Typography variant="h6" align="center" gutterBottom>
-        {data.current.condition.text}
-      </Typography>
-    
-      <Grid2 container spacing={2} sx={{ m: 2 }}>
-        <Grid2 size={6}>
-          <Typography variant="body2">
-            Feels Like
-          </Typography>
-          <Typography variant="body1">
-            {data.current.feelslike_c}°C
-          </Typography>
-        </Grid2>
-        <Grid2 size={6}>
-          <Typography variant="body2">
-            Humidity
-          </Typography>
-          <Typography variant="body1">
-            {data.current.humidity}%
-          </Typography>
-        </Grid2>
-        <Grid2 size={6}>
-          <Typography variant="body2">
-            Wind
-          </Typography>
-          <Typography variant="body1">
-            {data.current.wind_kph} km/h
-          </Typography>
-        </Grid2>
-        <Grid2 size={6}>
-          <Typography variant="body2">
-            UV Index
-          </Typography>
-          <Typography variant="body1">
-            {data.current.uv}
-          </Typography>
-        </Grid2>
-      </Grid2>
-    </Paper>
-  )
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-around",
+          width: "100%",
+          mb: 4,
+        }}
+      >
+        <Typography variant="body1">💨 {data.current.wind_kph} km/h</Typography>
+        <Typography variant="body1">💧 {data.current.humidity}%</Typography>
+        <Typography variant="body1">🌧 {data.current.precip_mm} mm</Typography>
+      </Box>
+    </Box>
+  );
 }
 
 export default WeatherCard

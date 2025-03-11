@@ -14,8 +14,8 @@ function App() {
 	}
 
 	return (
-		<CityBackground location={location}>
-			<Container maxWidth="sm">
+		<CityBackground location={data?.location}>
+			<Container maxWidth="xs">
 				<Box>
 					<SearchBar onSearch={onSearch} />
 					<Spinner isLoading={isLoading}/>

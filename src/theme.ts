@@ -8,6 +8,9 @@ export const theme = createTheme({
 			secondary: 'rgba(255, 255, 255, 0.7)',
 		},
 	},
+	typography: {
+		fontFamily: "'Roboto', sans-serif",
+	},
 	components: {
 		MuiPaper: {
 			styleOverrides: {

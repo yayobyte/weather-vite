@@ -1,38 +1,37 @@
 import { Box } from '@mui/material';
 import { ReactNode, useState, useEffect } from 'react';
 import { usePexels } from '../../hooks/usePexels';
-
-
+import { isDayTime } from '../../helpers/date';
+import { WeatherLocation } from './../../api/weather/weatherService.d'
+import { getRandomNumber } from '../../helpers/numbers';
+import { RESULTS_PER_PAGE } from '../../api/images/pexelsService';
 
 const DEFAULT_DAYTIME_IMAGE = './default_background_day.jpeg'
 const DEFAULT_NIGHTTIME_IMAGE = './default_background_night.jpeg'
 
 const getDefaultImage = () => {
-	const now = new Date()
-	const hours = now.getHours()
-	const isDayTime = hours >= 6 && hours < 18
-	return isDayTime ? DEFAULT_DAYTIME_IMAGE : DEFAULT_NIGHTTIME_IMAGE
+	return isDayTime(new Date()) ? DEFAULT_DAYTIME_IMAGE : DEFAULT_NIGHTTIME_IMAGE
 }
 
 type CityBackgroundProps = {
-	location: string;
+	location?: WeatherLocation;
 	children: ReactNode;
 };
 
 const CityBackground = ({ location, children }: CityBackgroundProps) => {
-	const { data } = usePexels(location)
+	const { data } = usePexels(location?.name || '')
 	const [currentImage, setCurrentImage] = useState<string>(getDefaultImage())
 	const [imageLoaded, setImageLoaded] = useState<boolean>(true)
 
 	useEffect(() => {
-		if (data?.photos?.[0]?.src?.portrait) {
-			const pexelsImage = data.photos[0].src.portrait
-			
+		const pexelsImage = data?.photos?.[getRandomNumber(0,RESULTS_PER_PAGE)]?.src?.portrait
+		if (pexelsImage) {
 			const img = new Image()
 			img.src = pexelsImage
 
 			img.onload = () => {
 				setImageLoaded(false)
+				
 				setTimeout(() => {
 					setCurrentImage(pexelsImage)
 					setImageLoaded(true)

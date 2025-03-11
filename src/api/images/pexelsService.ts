@@ -1,11 +1,15 @@
+import { isDayTime } from '../../helpers/date'
 import { PexelsSearchResponse } from './pexelsService.d'
+
+export const RESULTS_PER_PAGE = 40
 
 const API_KEY = import.meta.env.VITE_PEXELS_API_KEY
 const BASE_URL = 'https://api.pexels.com/v1'
-const CITY_DEFAULT_IMAGE_CONTEXT = 'main building landscape'
+const CITY_DEFAULT_IMAGE_CONTEXT = 'main attraction'
 
 const getCitySearch = (city: string) => {
-    return `${city} ${CITY_DEFAULT_IMAGE_CONTEXT}`
+    const dayOrNight = isDayTime(new Date()) ? 'day' : 'night'
+    return `${city} ${dayOrNight} ${CITY_DEFAULT_IMAGE_CONTEXT}`
 } 
 
 export abstract class PexelsService {
@@ -15,7 +19,7 @@ export abstract class PexelsService {
                 query: getCitySearch(city),
                 orientation: 'portrait',
                 size: 'small',
-                per_page: '1',
+                per_page: RESULTS_PER_PAGE.toString(),
                 locale: 'en-US',
             });
             console.log('Fetching images...')

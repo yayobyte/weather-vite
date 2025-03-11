@@ -38,6 +38,10 @@ type Current = {
     uv: number
     gust_mph: number
     gust_kph: number
+    heatindex_c: number
+    heatindex_f: number
+    windchill_c: number
+    windchill_f: number
 }
 
 export type WeatherResponse = {
