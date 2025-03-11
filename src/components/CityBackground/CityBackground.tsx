@@ -50,7 +50,7 @@ const CityBackground = ({ location, children, isError = false }: CityBackgroundP
 				setImageLoaded(true)
 			}
 		}
-}, [data])
+}, [data, isError])
 
 	return (
 		<Box
