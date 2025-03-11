@@ -5,7 +5,6 @@ import { isDayTime } from '../../helpers/date';
 import { WeatherLocation } from './../../api/weather/weatherService.d'
 import { getRandomNumber } from '../../helpers/numbers';
 import { RESULTS_PER_PAGE } from '../../api/images/pexelsService';
-import { getWeatherEffect } from '../../api/weather/helpers';
 
 const DEFAULT_DAYTIME_IMAGE = './default_background_day.jpeg'
 const DEFAULT_NIGHTTIME_IMAGE = './default_background_night.jpeg'
@@ -14,8 +13,6 @@ const getNotFoundImage = () => {
 	const imageIndex = getRandomNumber(0,1)
 	return `./pexels-404-${imageIndex}.jpg`
 }
-
-const getWeatherEffectImageLayout = (weatherConditionCode: number | undefined) => `./${getWeatherEffect(weatherConditionCode || 0)}.jpg`
 
 const getDefaultImage = () => {
 	return isDayTime(new Date()) ? DEFAULT_DAYTIME_IMAGE : DEFAULT_NIGHTTIME_IMAGE
@@ -29,14 +26,9 @@ type CityBackgroundProps = {
 };
 
 const CityBackground = ({ location, children, isError, weatherConditionCode }: CityBackgroundProps) => {
-	const { data } = usePexels(location?.name || '')
+	const { data } = usePexels(location?.name || '', weatherConditionCode)
 	const [currentImage, setCurrentImage] = useState<string>(isError ? getNotFoundImage() : getDefaultImage())
 	const [opacity, setOpacity] = useState<number>(1)
-
-	
-	const weatherEffect = getWeatherEffectImageLayout(weatherConditionCode)
-
-	console.log({ weatherConditionCode, weatherEffect })
 
 	const createFadeEffect = (image: string) => {
 		setOpacity(0)
@@ -100,22 +92,6 @@ const CityBackground = ({ location, children, isError, weatherConditionCode }: C
 					transition: 'opacity 0.3s ease-in-out',
 				}}
 			/>
-			{weatherEffect && (
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundImage: `url(${weatherEffect})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            opacity: 0.5,
-            zIndex: 1,
-          }}
-        />
-      )}
 			<Box
 				sx={{
 						position: 'absolute',
@@ -123,7 +99,7 @@ const CityBackground = ({ location, children, isError, weatherConditionCode }: C
 						left: 0,
 						right: 0,
 						bottom: 0,
-						backgroundColor: `rgba(0, 0, 0, ${weatherEffect ? 0.3 : 0.5})`,
+						backgroundColor: `rgba(0, 0, 0, 0.5)`,
 						zIndex: 1,
 				}}
 			/>

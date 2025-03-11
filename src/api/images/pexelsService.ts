@@ -1,4 +1,5 @@
 import { isDayTime } from '../../helpers/date'
+import { getWeatherQuery } from '../weather/helpers'
 import { PexelsSearchResponse } from './pexelsService.d'
 
 export const RESULTS_PER_PAGE = 80
@@ -10,13 +11,13 @@ const CITY_DEFAULT_IMAGE_CONTEXT = 'main attraction'
 const getCitySearch = (city: string) => {
     const dayOrNight = isDayTime(new Date()) ? 'day' : 'night'
     return `${city} ${dayOrNight} ${CITY_DEFAULT_IMAGE_CONTEXT}`
-} 
+}
 
 export abstract class PexelsService {
-    public static async getCityImage(city: string): Promise<PexelsSearchResponse> {
+    public static async getCityImage(city: string, weatherConditionCode: number | undefined): Promise<PexelsSearchResponse> {
         try {
             const params = new URLSearchParams({
-                query: getCitySearch(city),
+                query: getWeatherQuery(weatherConditionCode) || getCitySearch(city),
                 orientation: 'portrait',
                 size: 'small',
                 per_page: RESULTS_PER_PAGE.toString(),
