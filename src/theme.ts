@@ -9,7 +9,7 @@ export const theme = createTheme({
 		},
 	},
 	typography: {
-		fontFamily: "'Roboto', sans-serif",
+		fontFamily: "'Raleway', sans-serif",
 	},
 	components: {
 		MuiPaper: {
@@ -43,6 +43,11 @@ export const theme = createTheme({
 			styleOverrides: {
 				root: {
 					color: '#ffffff',
+				},
+				h1: {
+					fontFamily: "'Roboto Flex', sans-serif",
+					fontWeight: 100,
+					fontSize: '6.8rem',
 				},
 				body2: {
 					color: 'rgba(255, 255, 255, 0.7)',
