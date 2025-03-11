@@ -4,17 +4,13 @@ import {
 	Box, 
 	Grid2, 
 } from '@mui/material'
-import { WeatherResponse } from '../../api/weatherService.d'
+import { WeatherResponse } from '../../api/weather/weatherService.d'
 
 type WeatherCardProps = {
 	data: WeatherResponse
 }
 
 const WeatherCard = ({ data }: WeatherCardProps) => {
-if ('message' in data) {
-	return null
-}
-
 return (
 	<Paper elevation={3}>
 		<Box sx={{ textAlign: 'center', mb: 2 }}>
@@ -43,7 +39,7 @@ return (
 		</Typography>
 	
 		<Grid2 container spacing={2}>
-			<Grid2 size={8}>
+			<Grid2 size={6}>
 				<Typography variant="body2">Feels Like</Typography>
 				<Typography variant="body1">{data.current.feelslike_c}°C</Typography>
 			</Grid2>

@@ -52,3 +52,9 @@ export default tseslint.config({
   },
 })
 ```
+
+## API Documentation
+Images Api
+```
+https://www.pexels.com/api/documentation/#photos-search
+```
