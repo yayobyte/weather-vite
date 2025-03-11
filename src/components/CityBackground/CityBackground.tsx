@@ -24,32 +24,48 @@ type CityBackgroundProps = {
 	isError?: boolean
 };
 
-const CityBackground = ({ location, children, isError = false }: CityBackgroundProps) => {
+const CityBackground = ({ location, children, isError }: CityBackgroundProps) => {
 	const { data } = usePexels(location?.name || '')
-	const [currentImage, setCurrentImage] = useState<string>(getDefaultImage())
-	const [imageLoaded, setImageLoaded] = useState<boolean>(true)
+	const [currentImage, setCurrentImage] = useState<string>(isError ? getNotFoundImage() : getDefaultImage())
+	const [opacity, setOpacity] = useState<number>(1)
+
+	const createFadeEffect = (image: string) => {
+		setOpacity(0)
+		return setTimeout(() => {
+			setCurrentImage(image)
+			setTimeout(() => setOpacity(1), 50)
+		}, 300)
+	}
 
 	useEffect(() => {
+		let notFoundListener: number | undefined, onLoadListener: number | undefined, onErrorListener: number | undefined
+		if (isError) {
+	  const errorImage = getNotFoundImage()
+	  notFoundListener = createFadeEffect(errorImage)
+	  return;
+	}
+
 		const pexelsImage = data?.photos?.[getRandomNumber(0,RESULTS_PER_PAGE)]?.src?.portrait
 		if (pexelsImage) {
 			const img = new Image()
 			img.src = pexelsImage
 
 			img.onload = () => {
-				setImageLoaded(false)
-				
-				setTimeout(() => {
-					setCurrentImage(isError ? getNotFoundImage() : pexelsImage)
-					setImageLoaded(true)
-				}, 300)
+				onLoadListener = createFadeEffect(pexelsImage)
 			}
 			
 			img.onerror = () => {
 				console.error("Failed to load Pexels image")
-				setCurrentImage(getDefaultImage())
-				setImageLoaded(true)
+				onErrorListener = createFadeEffect(getDefaultImage())
 			}
 		}
+
+		return () => {
+			clearTimeout(notFoundListener)
+			clearTimeout(onLoadListener)
+			clearTimeout(onErrorListener)
+		}
+
 }, [data, isError])
 
 	return (
@@ -71,7 +87,7 @@ const CityBackground = ({ location, children, isError = false }: CityBackgroundP
 					backgroundImage: `url(${currentImage})`,
 					backgroundSize: 'cover',
 					backgroundPosition: 'center',
-					opacity: imageLoaded ? 1 : 0,
+					opacity: opacity,
 					transition: 'opacity 0.3s ease-in-out',
 				}}
 			/>
