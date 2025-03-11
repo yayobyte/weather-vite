@@ -31,7 +31,7 @@ const WeatherCard = ({ data }: WeatherCardProps) => {
       </Box>
 
       <Box sx={{ mb: 8 }}>
-        <Typography variant="h1" sx={{ fontWeight: 100 }}>
+        <Typography variant="h1" sx={{ fontWeight: 100, ml: 5 }}>
           {data.current.temp_c}°
         </Typography>
         

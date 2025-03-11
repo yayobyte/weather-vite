@@ -31,6 +31,7 @@ export const theme = createTheme({
 					root: {
 						paddingLeft: 8,
 						paddingRight: 8,
+						flex: 1,
 					},
 					input: {
 						padding: '8px',
