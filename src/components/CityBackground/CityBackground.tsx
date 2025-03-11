@@ -9,6 +9,11 @@ import { RESULTS_PER_PAGE } from '../../api/images/pexelsService';
 const DEFAULT_DAYTIME_IMAGE = './default_background_day.jpeg'
 const DEFAULT_NIGHTTIME_IMAGE = './default_background_night.jpeg'
 
+const getNotFoundImage = () => {
+	const imageIndex = getRandomNumber(0,1)
+	return `./pexels-404-${imageIndex}.jpg`
+}
+
 const getDefaultImage = () => {
 	return isDayTime(new Date()) ? DEFAULT_DAYTIME_IMAGE : DEFAULT_NIGHTTIME_IMAGE
 }
@@ -16,9 +21,10 @@ const getDefaultImage = () => {
 type CityBackgroundProps = {
 	location?: WeatherLocation;
 	children: ReactNode;
+	isError?: boolean
 };
 
-const CityBackground = ({ location, children }: CityBackgroundProps) => {
+const CityBackground = ({ location, children, isError = false }: CityBackgroundProps) => {
 	const { data } = usePexels(location?.name || '')
 	const [currentImage, setCurrentImage] = useState<string>(getDefaultImage())
 	const [imageLoaded, setImageLoaded] = useState<boolean>(true)
@@ -33,7 +39,7 @@ const CityBackground = ({ location, children }: CityBackgroundProps) => {
 				setImageLoaded(false)
 				
 				setTimeout(() => {
-					setCurrentImage(pexelsImage)
+					setCurrentImage(isError ? getNotFoundImage() : pexelsImage)
 					setImageLoaded(true)
 				}, 300)
 			}

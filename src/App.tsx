@@ -18,12 +18,12 @@ function App() {
 	const error = { message: ' No location found'}
 
 	return (
-		<CityBackground location={data?.location}>
+		<CityBackground location={data?.location} isError={isError}>
 			<Container maxWidth="xs">
 				<Box>
 					<SearchBar onSearch={onSearch} />
 					<Spinner isLoading={isLoading}/>
-					{(isError) && <Alert message={error?.message} />}
+					{(isError && !isLoading) && <Alert message={error?.message} />}
 					{(data && !isError) && <WeatherCard data={data} />}
 				</Box>
 			</Container>
