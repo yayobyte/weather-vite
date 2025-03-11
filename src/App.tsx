@@ -15,7 +15,7 @@ function App() {
 	}
 
 	return (
-		<CityBackground location={data?.location} isError={isError}>
+		<CityBackground location={data?.location} isError={isError} weatherConditionCode={data?.current.condition.code}>
 			<Container maxWidth="xs">
 				<Box>
 					<SearchBar onSearch={onSearch} />
