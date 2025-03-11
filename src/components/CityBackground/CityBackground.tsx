@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { ReactNode } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import { usePexels } from '../../hooks/usePexels';
 
 
@@ -21,8 +21,31 @@ type CityBackgroundProps = {
 
 const CityBackground = ({ location, children }: CityBackgroundProps) => {
 	const { data } = usePexels(location)
+	const [currentImage, setCurrentImage] = useState<string>(getDefaultImage())
+	const [imageLoaded, setImageLoaded] = useState<boolean>(true)
 
-	const backgroundImage = data?.photos?.[0].src.portrait || getDefaultImage()
+	useEffect(() => {
+		if (data?.photos?.[0]?.src?.portrait) {
+			const pexelsImage = data.photos[0].src.portrait
+			
+			const img = new Image()
+			img.src = pexelsImage
+
+			img.onload = () => {
+				setImageLoaded(false)
+				setTimeout(() => {
+					setCurrentImage(pexelsImage)
+					setImageLoaded(true)
+				}, 300)
+			}
+			
+			img.onerror = () => {
+				console.error("Failed to load Pexels image")
+				setCurrentImage(getDefaultImage())
+				setImageLoaded(true)
+			}
+		}
+}, [data])
 
 	return (
 		<Box
@@ -30,21 +53,34 @@ const CityBackground = ({ location, children }: CityBackgroundProps) => {
 				position: 'relative',
 				minHeight: '100vh',
 				width: '100%',
-				backgroundImage: `url(${backgroundImage})`,
-				backgroundSize: 'cover',
-				backgroundPosition: 'center',
-				'&::before': {
-					content: '""',
+				overflow: 'hidden',
+			}}
+		>
+			<Box
+				sx={{
 					position: 'absolute',
 					top: 0,
 					left: 0,
-					width: '100%',
-					height: '100%',
-					backgroundColor: 'rgba(0, 0, 0, 0.5)',
-					zIndex: 1,
-				},
-			}}
-		>
+					right: 0,
+					bottom: 0,
+					backgroundImage: `url(${currentImage})`,
+					backgroundSize: 'cover',
+					backgroundPosition: 'center',
+					opacity: imageLoaded ? 1 : 0,
+					transition: 'opacity 0.3s ease-in-out',
+				}}
+			/>
+			<Box
+				sx={{
+						position: 'absolute',
+						top: 0,
+						left: 0,
+						right: 0,
+						bottom: 0,
+						backgroundColor: 'rgba(0, 0, 0, 0.5)',
+						zIndex: 1,
+				}}
+			/>
 			<Box
         sx={{
           position: 'relative',
