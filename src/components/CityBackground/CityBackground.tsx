@@ -8,6 +8,7 @@ import { RESULTS_PER_PAGE } from '../../api/images/pexelsService';
 
 const DEFAULT_DAYTIME_IMAGE = './default_background_day.jpeg'
 const DEFAULT_NIGHTTIME_IMAGE = './default_background_night.jpeg'
+const IMAGE_CHANGE_TIMING = 60 * 1000
 
 const getNotFoundImage = () => {
 	const imageIndex = getRandomNumber(0,1)
@@ -28,6 +29,7 @@ type CityBackgroundProps = {
 const CityBackground = ({ location, children, isError, weatherConditionCode }: CityBackgroundProps) => {
 	const { data } = usePexels(location?.name || '', weatherConditionCode)
 	const [currentImage, setCurrentImage] = useState<string>(isError ? getNotFoundImage() : getDefaultImage())
+	const [currentImageIndex, setCurrentImageIndex] = useState<number>(getRandomNumber(0,RESULTS_PER_PAGE))
 	const [opacity, setOpacity] = useState<number>(1)
 
 	const createFadeEffect = (image: string) => {
@@ -46,7 +48,7 @@ const CityBackground = ({ location, children, isError, weatherConditionCode }: C
 			return;
 		}
 
-		const pexelsImage = data?.photos?.[getRandomNumber(0,RESULTS_PER_PAGE)]?.src?.portrait
+		const pexelsImage = data?.photos?.[currentImageIndex]?.src?.portrait
 		if (pexelsImage) {
 			const img = new Image()
 			img.src = pexelsImage
@@ -67,8 +69,16 @@ const CityBackground = ({ location, children, isError, weatherConditionCode }: C
 			clearTimeout(onErrorListener)
 		}
 
-	}, [data, isError])
+	}, [data, isError, currentImageIndex])
 
+	useEffect(() => {
+		const imageChangerTimer = setInterval(() => {
+			setCurrentImageIndex(getRandomNumber(0,RESULTS_PER_PAGE))
+		}, IMAGE_CHANGE_TIMING)
+		return () => clearTimeout(imageChangerTimer)
+	}, [data, isError, currentImageIndex])
+
+console.log({ currentImageIndex })
 	return (
 		<Box
 			sx={{
