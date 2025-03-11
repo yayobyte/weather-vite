@@ -21,7 +21,7 @@ export const theme = createTheme({
 					background: 'rgba(255, 255, 255, 0.1)',
 					border: '1px solid rgba(255, 255, 255, 0.18)',
 					padding: 3,
-					borderRadius: 2,
+					borderRadius: 8,
 					boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
 				},
 			},
@@ -34,7 +34,8 @@ export const theme = createTheme({
 						flex: 1,
 					},
 					input: {
-						padding: '8px',
+						padding: 1,
+						borderRadius: 8,
 					},
 			},
 		},

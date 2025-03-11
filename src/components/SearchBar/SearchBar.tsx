@@ -25,7 +25,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
 	return (
 		<Box component="form" onSubmit={handleClickButton} sx={{ my: 2 }}>
 			<Paper elevation={4}>
-				<Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+				<Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
 					<InputBase
 						inputRef={inputRef}
 						onChange={handleInputChange}
