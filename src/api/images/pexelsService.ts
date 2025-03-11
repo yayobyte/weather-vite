@@ -1,7 +1,7 @@
 import { isDayTime } from '../../helpers/date'
 import { PexelsSearchResponse } from './pexelsService.d'
 
-export const RESULTS_PER_PAGE = 40
+export const RESULTS_PER_PAGE = 80
 
 const API_KEY = import.meta.env.VITE_PEXELS_API_KEY
 const BASE_URL = 'https://api.pexels.com/v1'
