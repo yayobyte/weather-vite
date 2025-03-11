@@ -19,22 +19,19 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
 		setInputValue(e.target.value)
 	}
 	return (
-		<Box component="form" onSubmit={handleClickButton}>
-			<Paper
-				elevation={4}
-				sx={{ 
-					display: 'flex', 
-					alignItems: 'center',
-				}}
-			>
-				<InputBase
-					onChange={handleInputChange}
-					value={inputValue}
-					placeholder="Search for a city..."
-				/>
-				<IconButton type='submit'>
-					<SearchIcon />
-				</IconButton>
+		<Box component="form" onSubmit={handleClickButton} sx={{ my: 2 }}>
+			<Paper elevation={4}>
+				<Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+					<InputBase
+						onChange={handleInputChange}
+						value={inputValue}
+						placeholder="Search for a city..."
+					/>
+					<IconButton type='submit'>
+						<SearchIcon />
+					</IconButton>
+				</Box>
+				
 			</Paper>   
 		</Box>
 	)
