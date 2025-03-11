@@ -2,6 +2,7 @@ import {
     Typography, 
     Box,
 } from '@mui/material'
+import { Wind, Droplets, CloudRain, ThermometerSun } from "lucide-react";
 import { WeatherResponse } from '../../api/weather/weatherService.d'
 import { formatDate } from '../../helpers/date'
 
@@ -33,11 +34,15 @@ const WeatherCard = ({ data }: WeatherCardProps) => {
         <Typography variant="h1" sx={{ fontWeight: 100 }}>
           {data.current.temp_c}°
         </Typography>
-        <Typography variant="h5">{data.current.condition.text}</Typography>
-        <Box sx={{ display: "flex", justifyContent: "center", gap: 6, mt: 2 }}>
-          <Typography variant="body1">⬆️ {data.current.heatindex_c}°C</Typography>
-          <Typography variant="body1">⬇️ {data.current.windchill_c}°C</Typography>
+        
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 2 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <ThermometerSun size={20} />
+            <Typography variant="body1">Feels like {data.current.feelslike_c}°C</Typography>
+          </Box>
         </Box>
+
+        <Typography variant="h5">{data.current.condition.text}</Typography>
       </Box>
 
       <Box
@@ -48,9 +53,18 @@ const WeatherCard = ({ data }: WeatherCardProps) => {
           mb: 4,
         }}
       >
-        <Typography variant="body1">💨 {data.current.wind_kph} km/h</Typography>
-        <Typography variant="body1">💧 {data.current.humidity}%</Typography>
-        <Typography variant="body1">🌧 {data.current.precip_mm} mm</Typography>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Wind size={20} />
+          <Typography variant="body1">{data.current.wind_kph} km/h</Typography>
+        </Box>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Droplets size={20} />
+          <Typography variant="body1">{data.current.humidity}%</Typography>
+        </Box>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <CloudRain size={20} />
+          <Typography variant="body1">{data.current.precip_mm} mm</Typography>
+        </Box>
       </Box>
     </Box>
   );

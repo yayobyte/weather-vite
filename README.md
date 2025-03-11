@@ -58,3 +58,13 @@ Images Api
 ```
 https://www.pexels.com/api/documentation/#photos-search
 ```
+
+Weather API
+```
+https://www.weatherapi.com/docs/
+```
+
+## Inspiration designs
+```
+https://dribbble.com/shots/5771773-Weather-App
+```
