@@ -111,7 +111,7 @@ const CityBackground = ({ location, children, isError, weatherConditionCode }: C
             backgroundImage: `url(${weatherEffect})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            opacity: 0.3,
+            opacity: 0.5,
             zIndex: 1,
           }}
         />
