@@ -16,7 +16,10 @@ export abstract class WeatherService {
             const response = await fetch(endpoint, {
                 method: 'GET',
             })
-            const data = response.json()
+            const data = await response.json()
+            if (data.error) {
+                throw new Error(data.error.message)
+            }
             return data
         } catch (error) {
             console.log('There was an error fetching weather')
