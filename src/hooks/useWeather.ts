@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { WeatherService } from '../api/weatherService'
 import { WeatherResponse } from '../api/weatherService.d'
 
-const CACHE_LIFE = 60 * 60 * 1000
+const CACHE_LIFE = 5 * 60 * 1000
 
 export function useWeather(location: string) {
     return useQuery<WeatherResponse, Error>({
