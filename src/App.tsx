@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useWeather } from './hooks/useWeather'
 import SearchBar from './components/SearchBar/SearchBar'
-import { Alert, Box, Container, Paper, Typography } from '@mui/material'
+import { Alert, Box, Container } from '@mui/material'
 import Spinner from './components/Ui/Spinner/Spinner'
+import WeatherCard from './components/WeatherCard/WeatherCard'
 
 function App() {
 	const [location, setLocation] = useState('Medellin')
@@ -15,32 +16,10 @@ function App() {
 	return (
 		<Container maxWidth="sm">
 			<Box>
-				<Typography variant='h6'>Weather Service</Typography>
-				<Typography variant="subtitle1" color="textSecondary">
-					Current Location: <span>{location}</span>
-				</Typography>
 				<SearchBar onSearch={onSearch} />
 				<Spinner isLoading={isLoading}/>
 				{isError && <Alert severity="error">Error: {error?.message}</Alert>}
-				{data && (
-					<Paper elevation={3}>
-						<Box justifyContent={'center'}>
-							<Typography variant="h4" component="h2" gutterBottom>
-								{data.location.name}, {data.location.country}
-							</Typography>
-							<Typography variant="h1">
-								{data.current.temp_c}°C
-							</Typography>
-							<Typography variant='h6' >
-								{data.current.temp_f}°F
-							</Typography>
-							<Typography variant="body1" sx={{ mt: 2 }}>
-								{data.current.condition.text}
-							</Typography>
-						</Box>
-						
-					</Paper>
-				)}
+				{data && <WeatherCard data={data} />}
 			</Box>
 		</Container>
 	)
