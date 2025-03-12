@@ -1,10 +1,10 @@
-import { WeatherResponse, SearchCityResponse } from './weatherService.d'
+import { SearchCityResponse, ForecastResponse } from './weatherService.d'
 
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY
 const BASE_URL = 'https://api.weatherapi.com/v1'
 
 export abstract class WeatherService {
-	public static async getCurrentWeather(location: string): Promise<WeatherResponse> {
+	public static async getForecastWeather(location: string): Promise<ForecastResponse> {
 		try {
 			const params = new URLSearchParams({
 				key: API_KEY,
@@ -12,7 +12,7 @@ export abstract class WeatherService {
 				aqi: 'no'
 			});
 			console.log('Fetching current weather...')
-			const endpoint = `${BASE_URL}/current.json?${params}`
+			const endpoint = `${BASE_URL}/forecast.json?${params}`
 			const response = await fetch(endpoint, {
 				method: 'GET',
 			})

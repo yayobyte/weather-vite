@@ -4,12 +4,12 @@ import {
   Divider,
 } from '@mui/material'
 import { Wind, Droplets, CloudRain, ThermometerSun } from "lucide-react";
-import { WeatherResponse } from '../../api/weather/weatherService.d'
+import { ForecastResponse } from '../../api/weather/weatherService.d'
 import { getTimeInTimezone } from '../../helpers/date'
 import { useEffect, useState } from 'react';
 
 type WeatherCardProps = {
-  data: WeatherResponse
+  data: ForecastResponse
   isListOpened: boolean
 }
 
