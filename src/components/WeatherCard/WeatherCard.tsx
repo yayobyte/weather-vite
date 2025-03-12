@@ -59,16 +59,16 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
             flex: { xs: 3, sm: 4 },
             justifyContent: 'space-between',
             flexDirection: 'column',
-            mr: { sm: 2 },
+            mr: 0,
           }}
         >
           <Typography
             variant="h1"
             sx={{
               fontWeight: 300,
-              ml: { xs: 0, sm: 4 },
+              ml: 4,
               mb: { xs: 2, sm: 1},
-              fontSize: { xs: "5rem", sm: "6.7rem" },
+              fontSize: { xs: "5.5rem", sm: "7.7rem" },
             }}
           >
             {data.current.temp_c}°

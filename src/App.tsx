@@ -13,8 +13,8 @@ function App() {
 	const [isListOpened, setIsListOpened] = useState(false)
 	const [debouncedValue, setDebouncedValue] = useState<string>('')
 
-	const { data, error, isError, isLoading } = useWeather(location)
-	const { data: searchData, isLoading: searchIsLoading } = useQueryCity(
+	const { data, error, isError: isWeatherError, isLoading: isWeatherLoading } = useWeather(location)
+	const { data: searchData, isLoading: searchIsLoading, isError: isCitySearchError } = useQueryCity(
 		debouncedValue.length >= MIN_SEARCH_CHARS ? debouncedValue : ''
 	)
 
@@ -22,16 +22,17 @@ function App() {
 		setLocation(city)
 	}
 
-	const isCityError = searchData?.length === 0
+	const isError = isWeatherError || isCitySearchError || searchData?.length === 0 
+	const isLoading = isWeatherLoading || searchIsLoading
 
 	return (
-		<CityBackground location={data?.location} isError={isError || isCityError} weatherConditionCode={data?.current.condition.code}>
+		<CityBackground location={data?.location} isError={isError} weatherConditionCode={data?.current.condition.code}>
 			<Container maxWidth="xs">
 				<Box>
 					<SearchBar onSearch={onSearch} setIsListOpened={setIsListOpened} setDebouncedValue={setDebouncedValue} isLoading={searchIsLoading} data={searchData} />
-					<Spinner isLoading={isLoading || searchIsLoading}/>
-					{((isError || isCityError) && !(isLoading || searchIsLoading)) && <Alert message={error?.message || "City not found"} />}
-					{(data && !(isError || isCityError) && !(isLoading || searchIsLoading)) && <WeatherCard data={data} isListOpened={isListOpened} />}
+					<Spinner isLoading={isLoading}/>
+					{(isError && !isLoading) && <Alert message={error?.message || "City not found"} />}
+					{(data && !isError && !isLoading) && <WeatherCard data={data} isListOpened={isListOpened} />}
 				</Box>
 			</Container>
 		</CityBackground>
