@@ -11,7 +11,7 @@ const DEFAULT_NIGHTTIME_IMAGE = './default_background_night.jpeg'
 const IMAGE_CHANGE_TIMING = 20 * 1000
 
 const getNotFoundImage = () => {
-	const imageIndex = getRandomNumber(0,3)
+	const imageIndex = getRandomNumber(0,5)
 	return `./pexels-404-${imageIndex}.jpg`
 }
 

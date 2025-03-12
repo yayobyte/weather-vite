@@ -1,10 +1,12 @@
+const SUGGEST_ON_WEATHER_CONDITIONS = import.meta.env.VITE_FEATURE_FLAG_SUGGEST_ON_WEATHER_CONDITIONS
+
 export enum weatherConditionQueries {
-  'FOG' = 'fog weather',
-  'SNOW' = 'snow weather',
-  'RAIN' = 'rain weather',
-  'CLOUDY' = 'cloudy weather',
-  'HAZY' = 'hazy weather',
-  'OVERCAST' = 'overcast weather'
+  'FOG' = 'fog',
+  'SNOW' = 'snow',
+  'RAIN' = 'rain',
+  'CLOUDY' = 'cloudy',
+  'HAZY' = 'hazy',
+  'OVERCAST' = 'overcast'
 }
 
 const weatherEffectMapping: Record<number, weatherConditionQueries | null> = {
@@ -28,6 +30,7 @@ const weatherEffectMapping: Record<number, weatherConditionQueries | null> = {
 };
 
 export const getWeatherQuery = (weatherConditionCode: number | undefined) => {
+  if (!SUGGEST_ON_WEATHER_CONDITIONS) { return null }
   if (!weatherConditionCode) { return null }
   return weatherEffectMapping[weatherConditionCode] || null
 }
