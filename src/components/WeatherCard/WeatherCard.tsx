@@ -1,19 +1,20 @@
 import { 
-    Typography, 
-    Box,
-    Divider,
+  Typography, 
+  Box,
+  Divider,
 } from '@mui/material'
 import { Wind, Droplets, CloudRain, ThermometerSun } from "lucide-react";
 import { WeatherResponse } from '../../api/weather/weatherService.d'
 import { formatDate } from '../../helpers/date'
 
 type WeatherCardProps = {
-    data: WeatherResponse
+  data: WeatherResponse
+  isListOpened: boolean
 }
 
 const ICON_SIZE = 30
 
-const WeatherCard = ({ data }: WeatherCardProps) => {
+const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
   return (
     <Box
       sx={{
@@ -22,6 +23,8 @@ const WeatherCard = ({ data }: WeatherCardProps) => {
         justifyContent: "space-between",
         alignItems: "center",
         textAlign: "center",
+        opacity: isListOpened ? 0.3 : 1,
+        transition: 'opacity 0.3s ease-in-out',
       }}
     >
       <Box sx={{ my: 4 }}>
@@ -29,7 +32,7 @@ const WeatherCard = ({ data }: WeatherCardProps) => {
           {data.location.name.toUpperCase()}
         </Typography>
         <Typography variant="body2">
-          {formatDate(new Date(data.location.localtime.split(" ")[0]))}
+          {formatDate(new Date(data.location.localtime.split(" ")[1]))}
         </Typography>
       </Box>
 

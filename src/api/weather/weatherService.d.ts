@@ -1,4 +1,5 @@
 type WeatherLocation = {
+    id: number
     name: string
     region: string
     country: string
@@ -48,3 +49,5 @@ export type WeatherResponse = {
     location: WeatherLocation
     current: Current
 }
+
+export type SearchCityResponse = Array<WeatherLocation>

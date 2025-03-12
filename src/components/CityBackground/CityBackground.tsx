@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { ReactNode, useState, useEffect } from 'react';
-import { usePexels } from '../../hooks/usePexels';
+import { usePexels } from '../../hooks/images/usePexels';
 import { isDayTime } from '../../helpers/date';
 import { WeatherLocation } from './../../api/weather/weatherService.d'
 import { getRandomNumber } from '../../helpers/numbers';
@@ -8,15 +8,23 @@ import { RESULTS_PER_PAGE } from '../../api/images/pexelsService';
 
 const DEFAULT_DAYTIME_IMAGE = './default_background_day.jpeg'
 const DEFAULT_NIGHTTIME_IMAGE = './default_background_night.jpeg'
-const IMAGE_CHANGE_TIMING = 60 * 1000
+const IMAGE_CHANGE_TIMING = 20 * 1000
 
 const getNotFoundImage = () => {
-	const imageIndex = getRandomNumber(0,1)
+	const imageIndex = getRandomNumber(0,3)
 	return `./pexels-404-${imageIndex}.jpg`
 }
 
 const getDefaultImage = () => {
 	return isDayTime(new Date()) ? DEFAULT_DAYTIME_IMAGE : DEFAULT_NIGHTTIME_IMAGE
+}
+
+const cssPositionAbsoluteFromZero = {
+	position: 'absolute',
+	top: 0,
+	left: 0,
+	right: 0,
+	bottom: 0,
 }
 
 type CityBackgroundProps = {
@@ -78,7 +86,6 @@ const CityBackground = ({ location, children, isError, weatherConditionCode }: C
 		return () => clearTimeout(imageChangerTimer)
 	}, [data, isError, currentImageIndex])
 
-console.log({ currentImageIndex })
 	return (
 		<Box
 			sx={{
@@ -90,11 +97,7 @@ console.log({ currentImageIndex })
 		>
 			<Box
 				sx={{
-					position: 'absolute',
-					top: 0,
-					left: 0,
-					right: 0,
-					bottom: 0,
+					...cssPositionAbsoluteFromZero,
 					backgroundImage: `url(${currentImage})`,
 					backgroundSize: 'cover',
 					backgroundPosition: 'center',
@@ -104,11 +107,7 @@ console.log({ currentImageIndex })
 			/>
 			<Box
 				sx={{
-						position: 'absolute',
-						top: 0,
-						left: 0,
-						right: 0,
-						bottom: 0,
+						...cssPositionAbsoluteFromZero,
 						backgroundColor: `rgba(0, 0, 0, 0.5)`,
 						zIndex: 1,
 				}}

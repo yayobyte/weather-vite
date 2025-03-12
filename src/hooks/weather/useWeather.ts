@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { WeatherService } from '../api/weather/weatherService'
-import { WeatherResponse } from '../api/weather/weatherService.d'
+import { WeatherService } from '../../api/weather/weatherService'
+import { WeatherResponse } from '../../api/weather/weatherService.d'
 
 const CACHE_LIFE = 5 * 60 * 1000
 

@@ -15,7 +15,7 @@ export const Alert = ({ message }: AlertProps) => {
         justifyContent: "center",
       }}
     >
-       <Typography variant="h5" sx={{ fontWeight: 200 }}>{message}</Typography>
+       <Typography variant="h5" sx={{ fontWeight: 400 }}>{message}</Typography>
     </Box>
   )
 }
