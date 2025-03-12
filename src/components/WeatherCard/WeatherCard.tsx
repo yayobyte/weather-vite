@@ -5,7 +5,8 @@ import {
 } from '@mui/material'
 import { Wind, Droplets, CloudRain, ThermometerSun } from "lucide-react";
 import { WeatherResponse } from '../../api/weather/weatherService.d'
-import { formatDate } from '../../helpers/date'
+import { getTimeInTimezone } from '../../helpers/date'
+import { useEffect, useState } from 'react';
 
 type WeatherCardProps = {
   data: WeatherResponse
@@ -15,6 +16,19 @@ type WeatherCardProps = {
 const ICON_SIZE = 30
 
 const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
+  const [localTime, setLocalTime] = useState(getTimeInTimezone(data.location.tz_id))
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setLocalTime(getTimeInTimezone(data.location.tz_id))
+    }, 1000)
+    return () => {
+      clearInterval(timer)
+    }
+  }, [data])
+
+  const hasLongCityName = data.location.name.length > 14
+
   return (
     <Box
       sx={{
@@ -28,11 +42,11 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
       }}
     >
       <Box sx={{ my: 4 }}>
-        <Typography variant="h3" sx={{ fontWeight: 400, fontFamily: "'Raleway', sans-serif" }}>
+        <Typography variant="h3" sx={{ fontWeight: 400, fontFamily: "'Raleway', sans-serif", fontSize: hasLongCityName ? "1.5rem" : "2rem" }}>
           {data.location.name.toUpperCase()}
         </Typography>
-        <Typography variant="body2">
-          {formatDate(new Date(data.location.localtime.split(" ")[1]))}
+        <Typography variant="body1" sx={{ fontFamily: "'Roboto Flex', sans-serif"}}>
+          {localTime}
         </Typography>
       </Box>
 
@@ -45,7 +59,7 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
             flex: { xs: 3, sm: 4 },
             justifyContent: 'space-between',
             flexDirection: 'column',
-            mr: { sm: 2 }
+            mr: { sm: 2 },
           }}
         >
           <Typography
@@ -53,8 +67,8 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
             sx={{
               fontWeight: 300,
               ml: { xs: 0, sm: 4 },
-              mb: { xs: 2, sm: 0},
-              fontSize: { xs: "4.7rem", sm: "6rem" },
+              mb: { xs: 2, sm: 1},
+              fontSize: { xs: "5rem", sm: "6.7rem" },
             }}
           >
             {data.current.temp_c}°
@@ -63,13 +77,13 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
           <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <ThermometerSun size={20} />
-              <Typography variant="body1" sx={{ fontFamily: "'Raleway', sans-serif"}}>
+              <Typography variant="body1" sx={{ fontFamily: "'Raleway', sans-serif" }}>
                 Feels like {data.current.feelslike_c}°C
               </Typography>
             </Box>
           </Box>
 
-          <Typography variant="h5" sx={{ fontSize: { xs: "1rem", sm: "1.3rem" }}}>{data.current.condition.text}</Typography>
+          <Typography variant="h5" sx={{ fontSize: { xs: "1rem", sm: "1.3rem" }, fontWeight: 600}}>{data.current.condition.text}</Typography>
         </Box>
 
         <Divider orientation='vertical' sx={{ height: { xs: 190, sm: 200 }, bgcolor: "white", width: 2 }} />

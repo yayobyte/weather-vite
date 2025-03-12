@@ -59,9 +59,9 @@ const SearchBar = ({ onSearch, setIsListOpened, setDebouncedValue, isLoading, da
 	useEffect(() => {
 		if(isItemSelected) return
 
-		let timerListener
+		let timerListener: number
 		if(inputValue.length >= MIN_SEARCH_CHARS) {
-			setTimeout(() => {
+			timerListener = setTimeout(() => {
 				setDebouncedValue(inputValue)
 				setIsListOpen(true)
 			}, DEBOUNCE_DELAY)
@@ -135,7 +135,7 @@ const SearchBar = ({ onSearch, setIsListOpened, setDebouncedValue, isLoading, da
 							>
 								<ListItemText
 									primary={<Typography variant='h6'>{city.name}</Typography>}
-									secondary={city.country}
+									secondary={<Typography variant='body1' sx={{ fontWeight: 200 }}>{city.country}</Typography>}
 								/>
 							</ListItemButton>
 						))}

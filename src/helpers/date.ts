@@ -18,3 +18,24 @@ export const formatDate = (date: Date): string => {
 	const year = date.getFullYear()
 	return `${weekday}, ${day} ${month} ${year}`
 }
+
+export const getTimeInTimezone = (
+  tz_id: string,
+): string => {
+  
+  try {
+    // Create formatter with the specified timezone
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: true,
+      timeZone: tz_id
+    });
+    
+    return formatter.format(new Date());
+  } catch (error) {
+    console.error(`Error formatting time for timezone ${tz_id}:`, error);
+    return new Date().toLocaleTimeString(); // Fallback to local time
+  }
+}
