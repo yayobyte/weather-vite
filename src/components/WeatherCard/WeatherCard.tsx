@@ -68,7 +68,7 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
               fontWeight: 300,
               ml: 4,
               mb: { xs: 2, sm: 1},
-              fontSize: { xs: "5.5rem", sm: "7.7rem" },
+              fontSize: { xs: "5.5rem", sm: "6.7rem" },
             }}
           >
             {data.current.temp_c}°
