@@ -3,10 +3,11 @@ import {
   Box,
   Divider,
 } from '@mui/material'
-import { Wind, Droplets, CloudRain, ThermometerSun, ArrowBigDown, ArrowBigUp } from "lucide-react";
+import { Wind, Droplets, CloudRain, Sun, ArrowBigDown, ArrowBigUp } from "lucide-react";
 import { ForecastResponse } from '../../api/weather/weatherService.d'
 import { getTimeInTimezone } from '../../helpers/date'
 import { useEffect, useState } from 'react';
+import { getUvIndexLabel } from '../../api/weather/helpers';
 
 type WeatherCardProps = {
   data: ForecastResponse
@@ -67,29 +68,29 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
             sx={{
               fontWeight: 300,
               ml: 4,
-              mb: { xs: 2, sm: 1},
+              mb: { xs: 0, sm: 1},
               fontSize: { xs: "5.5rem", sm: "6.7rem" },
             }}
           >
             {data.current.temp_c}°
           </Typography>
           
-          <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 2 }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0, sm: 1} }}>
-              <ArrowBigUp size={20} />
+          <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: { xs: 4, sm: 2} }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 0 }}>
+              <ArrowBigDown size={20} />
               <Typography variant="body1" sx={{ fontFamily: "'Raleway', sans-serif" }}>
                 {data.forecast.forecastday[0]?.day.mintemp_c}°C
               </Typography>
             </Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0, sm: 1} }}>
-              <ArrowBigDown size={20} />
+            <Box sx={{ display: "flex", alignItems: "center", gap: 0 }}>
+              <ArrowBigUp size={20} />
               <Typography variant="body1" sx={{ fontFamily: "'Raleway', sans-serif" }}>
                 {data.forecast.forecastday[0]?.day.maxtemp_c}°C
               </Typography>
             </Box>
           </Box>
 
-          <Typography variant="h5" sx={{ fontSize: { xs: "1rem", sm: "1.3rem" }, fontWeight: 600}}>{data.current.condition.text}</Typography>
+          <Typography variant="h5" sx={{ fontSize: "1.3rem" , fontWeight: 300}}>{data.current.condition.text}</Typography>
         </Box>
 
         <Divider orientation='vertical' sx={{ height: { xs: 190, sm: 200 }, bgcolor: "white", width: 2 }} />
@@ -114,11 +115,10 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
             <Typography variant="body1">{data.current.humidity}%</Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", flexDirection: 'column' }}>
-            <CloudRain size={ICON_SIZE} />
-            <Typography variant="body1">{data.current.precip_mm} mm</Typography>
+            <Sun size={ICON_SIZE} />
+            <Typography variant="body1">{getUvIndexLabel(data.current.uv)} UV</Typography>
           </Box>
         </Box>
-
       </Box>
 
       

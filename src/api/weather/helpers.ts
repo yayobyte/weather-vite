@@ -34,3 +34,11 @@ export const getWeatherQuery = (weatherConditionCode: number | undefined) => {
   if (!weatherConditionCode) { return null }
   return weatherEffectMapping[weatherConditionCode] || null
 }
+
+export const getUvIndexLabel = (uv: number): string => {
+  if (uv <= 2) return 'Low';
+  if (uv <= 5) return 'Moderate';
+  if (uv <= 7) return 'High';
+  if (uv <= 10) return 'Very High';
+  return 'Extreme';
+}
