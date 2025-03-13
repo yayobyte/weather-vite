@@ -11,7 +11,7 @@ type WeatherHourForecastProps = {
 }
 
 const DEFAULT_ANIMATION = Easing.easeInOutCubic
-const DEFAULT_ANIMATION_TIME = 600
+const DEFAULT_ANIMATION_TIME = 500
 
 const animationProperties : SmoothScrollOptions = { 
   axis: 'x',
@@ -23,19 +23,19 @@ const WeatherHourForecast = ({ forecastHours }: WeatherHourForecastProps) => {
 
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
-  const scrollLeft = () => {
-    smoothScroll(scrollContainerRef, -200, animationProperties);
+  const scrollLeft = (time: number | undefined) => {
+    smoothScroll(scrollContainerRef, -200, { ...animationProperties, duration: time });
   };
   
-  const scrollRight = () => {
-    smoothScroll(scrollContainerRef, 200, animationProperties);
+  const scrollRight = (time: number | undefined) => {
+    smoothScroll(scrollContainerRef, 200, { ...animationProperties, duration: time });
   };
 
   //Show to the user that the container can be scrolled-x
   useEffect(() => {
     const rightScrollerTimer = setTimeout(() => {
-      scrollRight()
-      scrollRight()
+      scrollRight(1200)
+      scrollRight(1200)
     }, 4 * 1000);
 
     return () => {
@@ -57,7 +57,7 @@ const WeatherHourForecast = ({ forecastHours }: WeatherHourForecastProps) => {
         },
       }}
     >
-      <ScrollButton className="scroll-button" size="small" orientation="left" handleScroll={scrollLeft} />
+      <ScrollButton className="scroll-button" size="small" orientation="left" handleScroll={() => scrollLeft(DEFAULT_ANIMATION_TIME)} />
       <Box
         ref={scrollContainerRef}
         sx={{
@@ -100,7 +100,7 @@ const WeatherHourForecast = ({ forecastHours }: WeatherHourForecastProps) => {
           </Box>
         ))}
       </Box>
-      <ScrollButton className="scroll-button" size="small" orientation="right" handleScroll={scrollRight} />
+      <ScrollButton className="scroll-button" size="small" orientation="right" handleScroll={() => scrollRight(DEFAULT_ANIMATION_TIME)} />
     </Box>
   )
 }
