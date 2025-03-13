@@ -3,7 +3,7 @@ import {
   Box,
   Divider,
 } from '@mui/material'
-import { Wind, Droplets, CloudRain, ThermometerSun } from "lucide-react";
+import { Wind, Droplets, CloudRain, ThermometerSun, ArrowBigDown, ArrowBigUp } from "lucide-react";
 import { ForecastResponse } from '../../api/weather/weatherService.d'
 import { getTimeInTimezone } from '../../helpers/date'
 import { useEffect, useState } from 'react';
@@ -27,7 +27,7 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
     }
   }, [data])
 
-  const hasLongCityName = data.location.name.length > 14
+  const isLongCityName = data.location.name.length > 14
 
   return (
     <Box
@@ -42,7 +42,7 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
       }}
     >
       <Box sx={{ my: 4 }}>
-        <Typography variant="h3" sx={{ fontWeight: 400, fontFamily: "'Raleway', sans-serif", fontSize: hasLongCityName ? "1.5rem" : "2rem" }}>
+        <Typography variant="h3" sx={{ fontWeight: 400, fontFamily: "'Raleway', sans-serif", fontSize: isLongCityName ? "1.5rem" : "2rem" }}>
           {data.location.name.toUpperCase()}
         </Typography>
         <Typography variant="body1" sx={{ fontFamily: "'Roboto Flex', sans-serif"}}>
@@ -75,10 +75,16 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
           </Typography>
           
           <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 2 }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <ThermometerSun size={20} />
+            <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0, sm: 1} }}>
+              <ArrowBigUp size={20} />
               <Typography variant="body1" sx={{ fontFamily: "'Raleway', sans-serif" }}>
-                Feels like {data.current.feelslike_c}°C
+                {data.forecast.forecastday[0]?.day.mintemp_c}°C
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0, sm: 1} }}>
+              <ArrowBigDown size={20} />
+              <Typography variant="body1" sx={{ fontFamily: "'Raleway', sans-serif" }}>
+                {data.forecast.forecastday[0]?.day.maxtemp_c}°C
               </Typography>
             </Box>
           </Box>
