@@ -80,7 +80,9 @@ const SearchBar = ({ onSearch, setIsListOpened, setDebouncedValue, isLoading, da
       
       if (!isClickOnInput && !isClickOnSuggestionList) {
         setIsListOpen(false)
-      }
+      } else {
+				setIsListOpen(true)
+			}
 		}
 		
 		document.addEventListener('mousedown', handleClickOutside)
