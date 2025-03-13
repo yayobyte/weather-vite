@@ -9,7 +9,8 @@ export abstract class WeatherService {
 			const params = new URLSearchParams({
 				key: API_KEY,
 				q: location,
-				aqi: 'no'
+				aqi: 'no',
+				days: '1',
 			});
 			console.log('Fetching current weather...')
 			const endpoint = `${BASE_URL}/forecast.json?${params}`

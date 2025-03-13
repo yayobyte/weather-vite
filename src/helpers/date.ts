@@ -24,7 +24,6 @@ export const getTimeInTimezone = (
 ): string => {
   
   try {
-    // Create formatter with the specified timezone
     const formatter = new Intl.DateTimeFormat('en-US', {
       hour: 'numeric',
       minute: 'numeric',
@@ -36,6 +35,20 @@ export const getTimeInTimezone = (
     return formatter.format(new Date());
   } catch (error) {
     console.error(`Error formatting time for timezone ${tz_id}:`, error);
-    return new Date().toLocaleTimeString(); // Fallback to local time
+    return new Date().toLocaleTimeString();
   }
+}
+
+// Format date time string into short time: 9 pm
+export const formatHour = (dateTimeString: string) => {
+  const date = new Date(dateTimeString)
+  const options: Intl.DateTimeFormatOptions = {
+    hour: 'numeric',
+    hour12: true,
+  };
+
+  return new Intl.DateTimeFormat('en-US', options)
+    .format(date)
+    .replace(/\./g, '')
+    .toLowerCase();
 }

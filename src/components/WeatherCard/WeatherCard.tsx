@@ -3,11 +3,12 @@ import {
   Box,
   Divider,
 } from '@mui/material'
-import { Wind, Droplets, CloudRain, Sun, ArrowBigDown, ArrowBigUp } from "lucide-react";
+import { Wind, Droplets, Sun, ArrowBigDown, ArrowBigUp } from "lucide-react";
 import { ForecastResponse } from '../../api/weather/weatherService.d'
 import { getTimeInTimezone } from '../../helpers/date'
 import { useEffect, useState } from 'react';
 import { getUvIndexLabel } from '../../api/weather/helpers';
+import WeatherHourForecast from '../WeatherHourForecast/WeatherHourForecast';
 
 type WeatherCardProps = {
   data: ForecastResponse
@@ -120,10 +121,9 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
           </Box>
         </Box>
       </Box>
-
       
+			<WeatherHourForecast forecastHours={data?.forecast.forecastday[0]?.hour}/>
 
-      
     </Box>
   );
 }
