@@ -44,7 +44,7 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
       }}
     >
       <Box sx={{ my: 4 }}>
-        <Typography variant="h3" sx={{ fontWeight: 400, fontFamily: "'Raleway', sans-serif", fontSize: isLongCityName ? "1.5rem" : "2rem" }}>
+        <Typography variant="h3" sx={{ fontWeight: 200, fontFamily: "'Raleway', sans-serif", fontSize: isLongCityName ? "1.5rem" : "2.2rem" }}>
           {data.location.name.toUpperCase()}
         </Typography>
         <Typography variant="body1" sx={{ fontFamily: "'Roboto Flex', sans-serif"}}>
@@ -91,7 +91,7 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
             </Box>
           </Box>
 
-          <Typography variant="h5" sx={{ fontSize: "1.3rem" , fontWeight: 300}}>{data.current.condition.text}</Typography>
+          <Typography variant="h5" sx={{ fontSize: "1.5rem" , fontWeight: 300}}>{data.current.condition.text}</Typography>
         </Box>
 
         <Divider orientation='vertical' sx={{ height: { xs: 190, sm: 200 }, bgcolor: "white", width: 2 }} />
