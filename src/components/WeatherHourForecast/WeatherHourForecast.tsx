@@ -1,9 +1,7 @@
-import { Box, IconButton, Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import { HourForecast } from "../../api/weather/weatherService.d"
 import { formatHour } from "../../helpers/date"
 import WeatherIcon from "../WeatherIcon/WeatherIcon"
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { useEffect, useRef } from "react"
 import { Easing, smoothScroll, SmoothScrollOptions } from "../../helpers/ui"
 import ScrollButton from "../Ui/ScrollButton/ScrollButton"
