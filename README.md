@@ -15,6 +15,51 @@ A simple weather app built with Vite, TypeScript, and Material UI. It allows use
 - **Local clock**: Displays the current time for the selected city.
 - **City search integration**: Uses Weather API to show available cities.
 - **Smooth UI/UX**: Features transparencies and small transitions for a visually appealing experience.
+- **Dynamic UI elements**: Components adapt fluidly to different screen sizes, ensuring a great experience on mobile and desktop.
+
+## Folder Structure
+
+```
+weather-vite/
+├── public/                  # Static assets
+├── src/                     # Source code
+│   ├── api/                 # API integration
+│   │   └── weather/         # Weather API service
+│   │       ├── weatherService.ts
+│   │       └── weatherService.d.ts
+│   ├── components/          # React components
+│   │   ├── CityBackground/  # Dynamic background component
+│   │   ├── FavoritesBar/    # Bottom navigation for favorites
+│   │   ├── SearchBar/       # City search with autocomplete
+│   │   ├── Ui/              # Reusable UI components
+│   │   │   ├── Alert/
+│   │   │   ├── ScrollButton/
+│   │   │   └── Spinner/
+│   │   ├── WeatherCard/     # Main weather display
+│   │   ├── WeatherHourForecast/ # Hourly forecast component
+│   │   └── WeatherIcon/     # Weather condition icons
+│   ├── helpers/             # Utility functions
+│   │   ├── date.ts          # Date and time formatting
+│   │   └── ui.ts            # UI animations and effects
+│   ├── hooks/               # Custom React hooks
+│   │   └── weather/         # Weather-related hooks
+│   │       ├── useQueryCity.ts
+│   │       └── useWeather.ts
+│   ├── services/            # Service layer
+│   │   └── localStorage/    # Local storage management
+│   ├── App.tsx              # Main application component
+│   ├── main.tsx             # Application entry point
+│   └── vite-env.d.ts        # Vite type definitions
+├── .env                     # Environment variables (not in repo)
+├── .env.example             # Example environment variables
+├── .eslintrc.cjs            # ESLint configuration
+├── .gitignore               # Git ignore rules
+├── index.html               # HTML entry point
+├── package.json             # Package configuration
+├── README.md                # Project documentation
+├── tsconfig.json            # TypeScript configuration
+└── vite.config.ts           # Vite configuration
+```
 
 ## Installation
 
@@ -70,6 +115,7 @@ The app is built using the following libraries:
 - **Framer Motion**: Animation library
 - **TanStack React Query**: Data fetching and state management
 - **React Swipeable Views**: Carousel and swipeable views
+- **Emotion (@emotion/react, @emotion/styled)**: CSS-in-JS styling
 
 ## API References
 
@@ -87,4 +133,4 @@ Here are some design inspirations that influenced the app's look and feel:
 ## License
 
 This project is licensed under the MIT License.
-Developed by @yayobyte
+
