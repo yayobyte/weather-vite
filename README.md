@@ -1,70 +1,90 @@
-# React + TypeScript + Vite
+# Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple weather app built with Vite, TypeScript, and Material UI. It allows users to search for a city, view weather conditions, and dynamically update the background based on the city's weather.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Search for a city and view its weather details.
+- Background dynamically changes based on the selected city's weather.
+- Weather effects such as rain, fog, snow, and clouds are overlaid for realism.
+- **Favorite cities**: Users can mark a city as a favorite.
+- **Scrollable favorite cities list**: Users can add multiple cities to favorites and scroll through them.
+- **Local storage persistence**: Favorites and weather data are stored in `localStorage`, so the app retains data after refresh.
+- **Detailed weather information**: Displays basic data such as temperature, UV index, and wind speed.
+- **Same-day forecast**: A scrollable box provides weather forecasts for different times of the day.
+- **Local clock**: Displays the current time for the selected city.
+- **City search integration**: Uses Weather API to show available cities.
+- **Smooth UI/UX**: Features transparencies and small transitions for a visually appealing experience.
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Clone the repository:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+   ```sh
+   git clone https://github.com/yayobyte/weather-vite.git
+   cd weather-vite
+   ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+   ```sh
+   npm install
+   ```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+   or
 
-## API Documentation
-Images Api
-```
-https://www.pexels.com/api/documentation/#photos-search
-```
+   ```sh
+   yarn install
+   ```
 
-Weather API
-```
-https://www.weatherapi.com/docs/
-```
+3. Set up environment variables:
 
-## Inspiration designs
-```
-https://dribbble.com/shots/5771773-Weather-App
-```
+   - Rename `.env.example` to `.env`
+   - Update the API keys inside the `.env` file. You will receive the correct `.env` file via email, or you can manually copy and paste the keys.
+
+4. Run the app:
+
+   ```sh
+   npm run dev
+   ```
+
+   or
+
+   ```sh
+   yarn dev
+   ```
+
+## Deployment
+
+The app is live at: [Weather Vite](https://weather-vite-rust.vercel.app/)
+
+## Libraries Used
+
+The app is built using the following libraries:
+
+- **Vite**: Fast development build tool
+- **React**: UI framework
+- **TypeScript**: Typed JavaScript
+- **Material UI (@mui/material, @mui/icons-material)**: UI components
+- **Lucide React**: Icon library
+- **Framer Motion**: Animation library
+- **TanStack React Query**: Data fetching and state management
+- **React Swipeable Views**: Carousel and swipeable views
+
+## API References
+
+- [Pexels API Documentation](https://www.pexels.com/api/documentation/#photos-search) (for background images)
+- [Weather API Documentation](https://www.weatherapi.com/docs/) (for weather data)
+
+## UI/UX Inspiration
+
+Here are some design inspirations that influenced the app's look and feel:
+
+- [Pinterest Example](https://ro.pinterest.com/pin/21532904442304349/)
+- [Dribbble - Weatherman UX/UI](https://dribbble.com/shots/5819437-Weather-App-Weatherman-UX-UI?utm_source=Pinterest_Shot\&utm_campaign=erikshaldzhyan\&utm_content=Weather+App+%2F+Weatherman+%2F+UX+%2F+UI\&utm_medium=Social_Share)
+- [Dribbble - Weather App](https://dribbble.com/shots/5771773-Weather-App)
+
+## License
+
+This project is licensed under the MIT License.
+Developed by @yayobyte

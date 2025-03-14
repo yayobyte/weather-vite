@@ -13,7 +13,7 @@ import { ForecastResponse } from "./api/weather/weatherService.d";
 import { LocalStorageService } from "./services/localStorage/localStorageService";
 
 function App() {
-  const [location, setLocation] = useState("Medellin")
+  const [location, setLocation] = useState("")
   const [isListOpened, setIsListOpened] = useState(false)
   const [debouncedValue, setDebouncedValue] = useState<string>("")
   const [favorites, setFavorites] = useState<ForecastResponse[]>([])
@@ -140,6 +140,9 @@ function App() {
           <Spinner isLoading={isLoading} />
           {isError && !isLoading && (
             <Alert message={error?.message || "City not found"} />
+          )}
+          {location === "" && (
+            <Alert message={"Search for a city to get started"} />
           )}
 
           {!isError && !isLoading && (

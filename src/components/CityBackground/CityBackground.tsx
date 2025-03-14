@@ -6,8 +6,8 @@ import { WeatherLocation } from './../../api/weather/weatherService.d'
 import { getRandomNumber } from '../../helpers/numbers';
 import { RESULTS_PER_PAGE } from '../../api/images/pexelsService';
 
-const DEFAULT_DAYTIME_IMAGE = './default_background_day.jpeg'
-const DEFAULT_NIGHTTIME_IMAGE = './default_background_night.jpeg'
+const DEFAULT_DAYTIME_IMAGE = './default_background_day.jpg'
+const DEFAULT_NIGHTTIME_IMAGE = './default_background_night.jpg'
 const IMAGE_CHANGE_TIMING = 20 * 1000
 
 const getNotFoundImage = () => {
