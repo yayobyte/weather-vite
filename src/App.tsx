@@ -114,6 +114,7 @@ function App() {
   const isLoading = isWeatherLoading || searchIsLoading
 	const isFavorite = favorites.some((fav) => fav.location.name === data?.location.name)
 	const currentViewIndex = viewingSearchResults ? favorites.length : currentFavoriteIndex
+  const isPristineState = location === "" && favorites.length === 0 && !data && !debouncedValue
 
   return (
     <CityBackground
@@ -141,7 +142,7 @@ function App() {
           {isError && !isLoading && (
             <Alert message={error?.message || "City not found"} />
           )}
-          {location === "" && (
+          {isPristineState && (
             <Alert message={"Search for a city to get started"} />
           )}
 
