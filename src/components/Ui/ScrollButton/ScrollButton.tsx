@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material"
+import { IconButton, SxProps, Theme } from "@mui/material"
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 
@@ -7,12 +7,15 @@ type ScrollButtonPropTypes = {
   orientation: 'left' | 'right'
   size: "small" | "inherit" | "large" | "medium"
   className: string
+  disabled?: boolean
+  sx?: SxProps<Theme> | undefined
 }
 
-const ScrollButton = ({ handleScroll, orientation, size, className }: ScrollButtonPropTypes) => {
+const ScrollButton = ({ handleScroll, orientation, size, className, sx, disabled = false }: ScrollButtonPropTypes) => {
   const position = orientation === 'left' ? { left: 0 } : { right: 0 }
   return (
-    <IconButton 
+    <IconButton
+      disabled={disabled}
       className={className}
       onClick={handleScroll}
       sx={{
@@ -28,6 +31,7 @@ const ScrollButton = ({ handleScroll, orientation, size, className }: ScrollButt
         },
         opacity: 0,
         transition: 'opacity 0.3s ease',
+        ...sx,
       }}
     >
       {orientation === 'left' ? <ArrowBackIosNewIcon fontSize={size} /> : <ArrowForwardIosIcon fontSize={size} />}

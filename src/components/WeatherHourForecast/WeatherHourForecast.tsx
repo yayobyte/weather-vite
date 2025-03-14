@@ -36,7 +36,7 @@ const WeatherHourForecast = ({ forecastHours }: WeatherHourForecastProps) => {
     const rightScrollerTimer = setTimeout(() => {
       scrollRight(1200)
       scrollRight(1200)
-    }, 4 * 1000);
+    }, 4 * 1000)
 
     return () => {
       clearTimeout(rightScrollerTimer)

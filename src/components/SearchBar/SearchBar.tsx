@@ -30,7 +30,7 @@ const SearchBar = ({ onSearch, setIsListOpened, setDebouncedValue, isLoading, da
 	const setPristineInput = useCallback(() => {
 		setDebouncedValue('')
 		setInputValue('')
-	}, [])
+	}, [setDebouncedValue])
 
 	const handleClickButton = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()

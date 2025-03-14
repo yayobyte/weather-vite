@@ -1,9 +1,5 @@
-import { 
-  Typography, 
-  Box,
-  Divider,
-} from '@mui/material'
-import { Wind, Droplets, Sun, ArrowBigDown, ArrowBigUp } from "lucide-react";
+import { Typography, Box, Divider, IconButton, Tooltip } from '@mui/material'
+import { Wind, Droplets, Sun, ArrowBigDown, ArrowBigUp, Heart, HeartOff } from "lucide-react";
 import { ForecastResponse } from '../../api/weather/weatherService.d'
 import { getTimeInTimezone } from '../../helpers/date'
 import { useEffect, useState } from 'react';
@@ -11,13 +7,22 @@ import { getUvIndexLabel } from '../../api/weather/helpers';
 import WeatherHourForecast from '../WeatherHourForecast/WeatherHourForecast';
 
 type WeatherCardProps = {
-  data: ForecastResponse
-  isListOpened: boolean
+  data: ForecastResponse;
+  isListOpened: boolean;
+  isFavorite?: boolean;
+  onAddToFavorite?: () => void;
+  onRemoveFavorite?: () => void;
 }
 
-const ICON_SIZE = 30
+const ICON_SIZE = 30;
 
-const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
+const WeatherCard = ({ 
+  data, 
+  isListOpened, 
+  isFavorite = false, 
+  onAddToFavorite, 
+  onRemoveFavorite 
+}: WeatherCardProps) => {
   const [localTime, setLocalTime] = useState(getTimeInTimezone(data.location.tz_id))
 
   useEffect(() => {
@@ -41,15 +46,37 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
         textAlign: "center",
         opacity: isListOpened ? 0.3 : 1,
         transition: 'opacity 0.3s ease-in-out',
+        height: '100%'
       }}
     >
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h3" sx={{ fontWeight: 200, fontFamily: "'Raleway', sans-serif", fontSize: isLongCityName ? "1.5rem" : "2.2rem" }}>
+      <Box sx={{ mb: 6, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', width: '100%' }}>
+				<Box sx={{ width: 36, height: '100%'}}/>
+        <Typography 
+          variant="h3" 
+          sx={{ 
+            fontWeight: 400, 
+            fontFamily: "'Raleway', sans-serif", 
+            fontSize: isLongCityName ? "1.5rem" : "2rem" 
+          }}
+        >
           {data.location.name.toUpperCase()}
+					<Typography variant="body1" sx={{ fontWeight: 600 }}>
+						{localTime}
+					</Typography>
         </Typography>
-        <Typography variant="body1" sx={{ fontFamily: "'Roboto Flex', sans-serif"}}>
-          {localTime}
-        </Typography>
+        <Tooltip title={isFavorite ? "Remove from favorites" : "Add to favorites"}>
+          <IconButton 
+            onClick={isFavorite ? onRemoveFavorite : onAddToFavorite}
+            sx={{ 
+              color: 'white', 
+              '&:hover': { 
+                backgroundColor: 'rgba(255, 255, 255, 0.1)' 
+              } 
+            }}
+          >
+            {isFavorite ? <HeartOff size={20} /> : <Heart size={20} />}
+          </IconButton>
+        </Tooltip>
       </Box>
 
       <Box
@@ -58,7 +85,7 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
         <Box
           sx={{
             mb: 8,
-            flex: { xs: 3, sm: 4 },
+            flex: 3,
             justifyContent: 'space-between',
             flexDirection: 'column',
             mr: 0,
@@ -67,34 +94,36 @@ const WeatherCard = ({ data, isListOpened }: WeatherCardProps) => {
           <Typography
             variant="h1"
             sx={{
-              fontWeight: 300,
+              fontWeight: 200,
               ml: 4,
-              mb: { xs: 0, sm: 1},
-              fontSize: { xs: "5.5rem", sm: "6.7rem" },
+              mb: 0,
+              fontSize: "6.7",
             }}
           >
-            {data.current.temp_c}°
+            {data.current.temp_c.toFixed(0)}°
           </Typography>
           
-          <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: { xs: 4, sm: 2} }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 0 }}>
-              <ArrowBigDown size={20} />
-              <Typography variant="body1" sx={{ fontFamily: "'Raleway', sans-serif" }}>
-                {data.forecast.forecastday[0]?.day.mintemp_c}°C
-              </Typography>
-            </Box>
+          <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 0 }}>
               <ArrowBigUp size={20} />
               <Typography variant="body1" sx={{ fontFamily: "'Raleway', sans-serif" }}>
-                {data.forecast.forecastday[0]?.day.maxtemp_c}°C
+                {data.forecast.forecastday[0]?.day.maxtemp_c.toFixed(0)}°C
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 0 }}>
+              <ArrowBigDown size={20} />
+              <Typography variant="body1" sx={{ fontFamily: "'Raleway', sans-serif" }}>
+                {data.forecast.forecastday[0]?.day.mintemp_c.toFixed(0)}°C
               </Typography>
             </Box>
           </Box>
 
-          <Typography variant="h5" sx={{ fontSize: "1.5rem" , fontWeight: 300}}>{data.current.condition.text}</Typography>
+          <Typography variant="h5" sx={{ fontSize: "1.5rem" , fontWeight: 300}}>
+            {data.current.condition.text}
+          </Typography>
         </Box>
 
-        <Divider orientation='vertical' sx={{ height: { xs: 190, sm: 200 }, bgcolor: "white", width: 2 }} />
+        <Divider orientation='vertical' sx={{ height: { xs: 190, sm: 190 }, bgcolor: "white", width: 2 }} />
 
         <Box
           sx={{
